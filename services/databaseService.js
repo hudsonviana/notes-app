@@ -21,6 +21,17 @@ const databaseService = {
       return { error: error.message }
     }
   },
+
+  // Delete documents
+  async deleteDocument(dbId, colId, id) {
+    try {
+      await database.deleteDocument(dbId, colId, id)
+      return { success: true }
+    } catch (error) {
+      console.error('Erro ao deletar documento:', error.message)
+      return { error: error.message }
+    }
+  },
 }
 
 export default databaseService

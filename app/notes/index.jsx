@@ -57,6 +57,28 @@ export default function NoteScreen() {
     setModalVisible(false)
   }
 
+  // Delete note
+  async function deleteNote(id) {
+    Alert.alert('Excluir nota', 'Está certo disso?', [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Excluir',
+        style: 'destructive',
+        onPress: async () => {
+          const response = await noteService.deleteNote(id)
+
+          if (response.error) {
+            setError(response.error)
+            Alert.alert('Erro:', response.error)
+          } else {
+            setNotes(notes.filter((note) => note.$id !== id))
+            setError(null)
+          }
+        },
+      },
+    ])
+  }
+
   return (
     <View style={styles.container}>
       {/* Note list */}
@@ -65,7 +87,7 @@ export default function NoteScreen() {
       ) : (
         <>
           {error && <Text style={styles.errorText}>{error}</Text>}
-          <NoteList notes={notes} />
+          <NoteList notes={notes} onDelete={deleteNote} />
         </>
       )}
 
