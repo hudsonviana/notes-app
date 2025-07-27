@@ -41,8 +41,6 @@ export default function NoteScreen() {
   async function addNote() {
     if (newNote.trim() === '') return
 
-    // const newId = Date.now().toString()
-    // setNotes((prevNotes) => [...prevNotes, { id: newId, text: newNote }])
     const response = await noteService.addNote(newNote)
 
     if (response.error) {
@@ -79,6 +77,28 @@ export default function NoteScreen() {
     ])
   }
 
+  // Edit note
+  async function editNote(id, newText) {
+    if (!newText.trim()) {
+      Alert.alert('Erro', 'A nota não pode ser vazia')
+      return
+    }
+
+    const response = await noteService.updateNote(id, newText)
+
+    if (response?.error) {
+      setError(response.error)
+      Alert.alert('Erro:', response.error)
+    } else {
+      setNotes((prevNotes) =>
+        prevNotes.map((note) =>
+          note.$id === id ? { ...note, text: response.data.text } : note
+        )
+      )
+      setError(null)
+    }
+  }
+
   return (
     <View style={styles.container}>
       {/* Note list */}
@@ -87,7 +107,7 @@ export default function NoteScreen() {
       ) : (
         <>
           {error && <Text style={styles.errorText}>{error}</Text>}
-          <NoteList notes={notes} onDelete={deleteNote} />
+          <NoteList notes={notes} onDelete={deleteNote} onEdit={editNote} />
         </>
       )}
 

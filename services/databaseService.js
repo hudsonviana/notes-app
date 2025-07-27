@@ -12,7 +12,7 @@ const databaseService = {
     }
   },
 
-  // Create documents
+  // Create document
   async createDocument(dbId, colId, data, id = null) {
     try {
       return await database.createDocument(dbId, colId, id || undefined, data)
@@ -22,13 +22,23 @@ const databaseService = {
     }
   },
 
-  // Delete documents
+  // Delete document
   async deleteDocument(dbId, colId, id) {
     try {
       await database.deleteDocument(dbId, colId, id)
       return { success: true }
     } catch (error) {
       console.error('Erro ao deletar documento:', error.message)
+      return { error: error.message }
+    }
+  },
+
+  // Update document
+  async updateDocument(dbId, colId, id, data) {
+    try {
+      return await database.updateDocument(dbId, colId, id, data)
+    } catch (error) {
+      console.error('Erro ao atualizar documento:', error.message)
       return { error: error.message }
     }
   },
