@@ -21,3 +21,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 })
+
+//ID: notes-project-rnapp
+//Package name: com.notes.app.android
+
+// EXPO_PUBLIC_APPWRITE_PROJECT_ID=notes-project-rnapp
+// EXPO_PUBLIC_APPWRITE_ENDPOINT=https://nyc.cloud.appwrite.io/v1
+
+// notes-db-rnapp
